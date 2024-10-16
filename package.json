@@ -1,0 +1,58 @@
+{
+  "name": "time-to-deadline-with-sad-cat",
+  "publisher": "YuriChehet",
+  "icon": "images/kot_logo.jpg",
+  "keywords": ["vscode", "extension", "cat", "deadline"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArbuzKaktus/Time_To_Deadline"
+  },
+
+  "displayName": "Time_To_Deadline",
+  "description": "exstension shows time to deadline",
+  "version": "0.0.11",
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.showTime",
+        "title": "Show Time"
+      },
+      {
+        "command": "extension.setDeadline",
+        "title": "Set Deadline"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.94.0",
+    "@types/mocha": "^10.0.8",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
+    "eslint": "^9.11.1",
+    "typescript": "^5.6.2",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
+}
