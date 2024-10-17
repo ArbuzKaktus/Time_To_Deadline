@@ -4,11 +4,17 @@ import * as path from 'path';
 export function activate(context: vscode.ExtensionContext) {
     //Создание статус бара с командой extension.showTime
     const timeStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-    timeStatusBarItem.command = 'extension.showTime';
-    timeStatusBarItem.tooltip = 'Click to show the current system time';
+    let DeadlineDate: Date | null = loadDeadlineDate(context); //дата дедлайна
+    if (DeadlineDate){
+        timeStatusBarItem.command = 'extension.showTime';
+        timeStatusBarItem.tooltip = 'Click to show the current system time';
+    } else{
+        timeStatusBarItem.command = 'extension.setDeadline';
+        timeStatusBarItem.tooltip = 'Click to set the Deadline';
+    }
     timeStatusBarItem.show();
 
-    let DeadlineDate: Date | null = loadDeadlineDate(context); //дата дедлайна
+    
     
     const imagePath = path.join(context.extensionPath, 'images', 'kot mem.jpg');// путь к котику
     // форматирование времени

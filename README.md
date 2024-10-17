@@ -7,11 +7,18 @@ The plugin shows the time before the deadline. When the deadline is over, the pl
 ## comands
 - Show Time
 - Set Deadline
----
-Show Time:
 
-shows system time
+### Show Time:
 
-Set Deadline:
+shows the system time
 
-Deadline data input
+### Set Deadline:
+
+Deadline date input 
+Date format:
+DD-MM HH:mm:ss
+
+## status bar
+
+shows the time until Deadline. If Deadline is not set shows message to set Deadline. 
+Click to time bar to view the system time or to set Deadline if it is not set.
