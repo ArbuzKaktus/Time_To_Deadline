@@ -49,7 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
 
                 const timeUntilDeadline = `${daysLeft}d ${formatTime(hoursLeft)}:${formatTime(minutesLeft)}:${formatTime(secondsLeft)}`;
 
-                timeStatusBarItem.text = `$(clock) ${timeUntilDeadline} until Deadline`;
+                timeStatusBarItem.text = `$(clock) ${currentTimeString} ||${timeUntilDeadline} until Deadline`;
 
                 checkDeadlineNotification();
             } else {
@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
                 removeDeadlineDate(context);
             }
         } else {
-            timeStatusBarItem.text = `$(alert) Set a new Deadline`;
+            timeStatusBarItem.text = `$(alert)Click to set a new Deadline`;
         }
     };
 
