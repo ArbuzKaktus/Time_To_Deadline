@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
             if (timeDifference <= 10 * 60 * 60 * 1000 && timeDifference > 9 * 60 * 60 * 1000) {    
                 vscode.window.showInformationMessage("Deadline will occur in 10 hours!");
             } else if (timeDifference <= 60 * 60 * 1000 && timeDifference > 59 * 60 * 1000) {    
-                vscode.window.showInformationMessage("Deadline will occur in 1 hour!");
+                vscode.window.showInformationMessage("Deadline will occur in 1 hour O.o");
             }
         }
     };
@@ -43,17 +43,17 @@ export function activate(context: vscode.ExtensionContext) {
 
                 const timeUntilDeadline = `${daysLeft}d ${formatTime(hoursLeft)}:${formatTime(minutesLeft)}:${formatTime(secondsLeft)}`;
 
-                timeStatusBarItem.text = `$(clock) ${currentTimeString} | ${timeUntilDeadline} until Deadline`;
+                timeStatusBarItem.text = `$(clock) ${timeUntilDeadline} until Deadline`;
 
                 checkDeadlineNotification();
             } else {
-                timeStatusBarItem.text = `$(check) Deadline has occurred!`;
+                timeStatusBarItem.text = `$(check) Deadline is over:(`;
 
                 vscode.commands.executeCommand('extension.showImage');
                 removeDeadlineDate(context);
             }
         } else {
-            timeStatusBarItem.text = `$(alert) Set an Deadline date and time`;
+            timeStatusBarItem.text = `$(alert) Set a new Deadline`;
         }
     };
 
@@ -66,11 +66,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposableSetDeadline = vscode.commands.registerCommand('extension.setDeadline', async () => {
         const input = await vscode.window.showInputBox({
-            placeHolder: 'Enter the Deadline date (DD-MM HH:mm)',
+            placeHolder: 'Enter the Deadline (DD-MM HH:mm:ss)',
             validateInput: (value: string) => {
-                const regex = /^\d{2}-\d{2} \d{2}:\d{2}$/;
+                const regex = /^\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
                 if (!regex.test(value)) {
-                    return 'Invalid format. Please use DD-MM HH:mm';
+                    return 'Invalid format. Please use DD-MM HH:mm:ss';
                 }
                 return null;
             }
@@ -80,9 +80,9 @@ export function activate(context: vscode.ExtensionContext) {
             const currentYear = new Date().getFullYear();
             const [data, time] = input.split(' ');
             const [day, month] = data.split('-');
-            const [hour, minute] = time.split(':');
+            const [hour, minute,seconds] = time.split(':');
 
-            const DeadlineString = `${currentYear}-${month}-${day}T${hour}:${minute}:59`;
+            const DeadlineString = `${currentYear}-${month}-${day}T${hour}:${minute}:${seconds}`;
 
             const parsedDate = new Date(DeadlineString);
             if (!isNaN(parsedDate.getTime())) {
