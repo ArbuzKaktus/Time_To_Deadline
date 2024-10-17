@@ -10,7 +10,7 @@
 
   "displayName": "Time_To_Deadline",
   "description": "exstension shows time to deadline",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "engines": {
     "vscode": "^1.94.0"
   },

@@ -2,20 +2,20 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 
 export function activate(context: vscode.ExtensionContext) {
-    
+    //Создание статус бара с командой extension.showTime
     const timeStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
     timeStatusBarItem.command = 'extension.showTime';
     timeStatusBarItem.tooltip = 'Click to show the current system time';
     timeStatusBarItem.show();
 
-    let DeadlineDate: Date | null = loadDeadlineDate(context);
-
-    const imagePath = path.join(context.extensionPath, 'images', 'kot mem.jpg');
-
+    let DeadlineDate: Date | null = loadDeadlineDate(context); //дата дедлайна
+    
+    const imagePath = path.join(context.extensionPath, 'images', 'kot mem.jpg');// путь к котику
+    // форматирование времени
     const formatTime = (time: number): string => {
         return time < 10 ? `0${time}` : time.toString();
     };
-
+    // вывод уведомления о скором завершении дедлайна
     const checkDeadlineNotification = () => {
         if (DeadlineDate) {
             const currentTime = new Date();
@@ -28,11 +28,11 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
     };
-
+    //обновление времени
     const updateTime = () => {
         const currentTime = new Date();
         const currentTimeString = currentTime.toLocaleTimeString();
-
+        // вывод оставшегося времени до дд, если он есть
         if (DeadlineDate) {
             const timeDifference = DeadlineDate.getTime() - currentTime.getTime();
             if (timeDifference > 0) {
@@ -58,12 +58,12 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     setInterval(updateTime, 1000);
-
+    //вывод текущего времени
     let disposableShowTime = vscode.commands.registerCommand('extension.showTime', () => {
         const currentTime = new Date().toLocaleTimeString();
         vscode.window.showInformationMessage(`Current system time is: ${currentTime}`);
     });
-
+    // ввод дедлайна
     let disposableSetDeadline = vscode.commands.registerCommand('extension.setDeadline', async () => {
         const input = await vscode.window.showInputBox({
             placeHolder: 'Enter the Deadline (DD-MM HH:mm:ss)',
@@ -75,7 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
                 return null;
             }
         });
-
+        // парсинг строки даты
         if (input) {
             const currentYear = new Date().getFullYear();
             const [data, time] = input.split(' ');
@@ -97,7 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     context.subscriptions.push(disposableShowTime);
     context.subscriptions.push(disposableSetDeadline);
-
+    //вывод котика
     let disposableShowImage = vscode.commands.registerCommand('extension.showImage', () => {
         const panel = vscode.window.createWebviewPanel(
             'DeadlineImage',
@@ -113,16 +113,16 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(disposableShowImage);
-
+    //удаление дедлайна из кеша
     function removeDeadlineDate(context: vscode.ExtensionContext) {
         DeadlineDate = null;
         context.globalState.update('DeadlineDate', null);
     }
-
+    //сохранение дедлайна в кеш
     function saveDeadlineDate(context: vscode.ExtensionContext, DeadlineDate: Date) {
         context.globalState.update('DeadlineDate', DeadlineDate.toISOString());
     }
-
+    //загрузка дедлайна в кеш
     function loadDeadlineDate(context: vscode.ExtensionContext): Date | null {
         const savedDate = context.globalState.get<string>('DeadlineDate');
         return savedDate ? new Date(savedDate) : null;
