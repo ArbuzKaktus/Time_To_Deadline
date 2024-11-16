@@ -28,6 +28,22 @@
       {
         "command": "extension.setDeadline",
         "title": "Set Deadline"
+      },
+      {
+        "command": "extension.removeImagePath",
+        "title": "Remove Image Path"
+      },
+      {
+        "command": "extension.setImagePath",
+        "title": "Set Image Path"
+      },
+      {
+        "command": "extension.setVideoPath",
+        "title": "Set Video Path"
+      },
+      {
+        "command": "extension.removeVideoPath",
+        "title": "Remove Vide Path"
       }
     ]
   },
